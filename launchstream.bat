@@ -15,14 +15,14 @@ if '%errorlevel%' NEQ '0' (
 ) else ( goto gotAdmin )
 
 :UACPrompt
-    powershell -Command "Start-Process -Wait -FilePath '%0' -Verb RunAs"
-    exit /B
+    powershell -WindowStyle Hidden -Command "Start-Process -FilePath '%0' -Verb RunAs"
+    exit /b
 
 :gotAdmin
     pushd "%CD%"
     CD /D "%~dp0"
 	
 
-start /b "" cmd /c "taskkill /F /IM streamlink.exe /T & streamlink --player-external-http --player-external-http-port 80 https://www.twitch.tv/%~n0 best"
 
-vlc --one-instance --loop --video-title-timeout 0 http://localhost :meta-title="➤ ԷᴡɪԷᴄʜ: %~n0 " --qt-minimal-view --video-on-top --zoom=0.25 --autoscale --no-video-deco
+start "" vlc --one-instance --loop http://localhost :meta-title="➤ ԷᴡɪԷᴄʜ: %~n0 " --qt-minimal-view --video-on-top --zoom=0.5 --autoscale --no-video-deco --qt-video-autoresize
+powershell -WindowStyle Hidden -Command "taskkill /F /IM streamlink.exe; streamlink --player-external-http --player-external-http-port 80 https://www.twitch.tv/%~n0 best"
